@@ -30,6 +30,17 @@ export type Race = {
   price_eur: number
   website: string
   description: string
+
+  // nuovi campi organizzativi (tutti opzionali per retrocompatibilità)
+  competition?: 'Competitive' | 'Non‑competitive' | 'Both'
+  associations?: string[]          // es. ['Fidal', 'UISP']
+  startTimes?: string[]            // orari di partenza
+  organizer?: string               // ente organizzatore
+  contactEmail?: string            // email pubblica
+  contactPhone?: string            // telefono
+  instagram?: string               // link o handle
+  privateEmail?: string            // mail riservata/staff
+  flyerUrl?: string                // URL al volantino o PDF
 }
 
 export const DISTANCE_INFO: Record<RaceDistance, {

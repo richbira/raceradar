@@ -9,6 +9,25 @@ export default function Home() {
   const [selectedType, setSelectedType] = useState<RaceType | 'all'>('all')
   const [selectedDistance, setSelectedDistance] = useState<RaceDistance | 'all'>('all')
 
+  // le liste di distanze disponibili in generale e per ogni categoria
+  const allDistances = ['all', '5k', '10k', 'Half-Marathon', 'Marathon', 'Ultra', 'Sprint', 'Olympic', 'Half-Ironman', 'Ironman'] as const
+  const runningDistances = ['all', '5k', '10k', 'Half-Marathon', 'Marathon', 'Ultra'] as const
+  const triathlonDistances = ['all', 'Sprint', 'Olympic', 'Half-Ironman', 'Ironman'] as const
+
+  // quando cambio tipo resetto la distanza (evito che rimanga un valore non più valido)
+  const onTypeClick = (type: typeof selectedType) => {
+    setSelectedType(type)
+    setSelectedDistance('all')
+  }
+
+  // scelgo dinamicamente le distanze da mostrare in funzione del tipo selezionato
+  const availableDistances =
+    selectedType === 'Running'
+      ? runningDistances
+      : selectedType === 'Triathlon'
+      ? triathlonDistances
+      : allDistances
+
   /*
     Questo prende l'array `races` e lo filtra in base ai tre stati. Per ogni gara controlla:
     - `matchSearch` → il testo che hai scritto è contenuto nella città, regione o nome?
@@ -49,7 +68,7 @@ export default function Home() {
           {(['all', 'Running', 'Triathlon', 'Trail', 'Cycling'] as const).map((type) => (
             <button
               key={type}
-              onClick={() => setSelectedType(type)}
+              onClick={() => onTypeClick(type)}
               className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
                 selectedType === type
                   ? 'bg-blue-600 text-white border-blue-600'
@@ -63,7 +82,7 @@ export default function Home() {
 
         {/* Filtro distanza */}
         <div className="flex gap-2 flex-wrap">
-          {(['all', '5k', '10k', 'Half-Marathon', 'Marathon', 'Ultra', 'Sprint', 'Olympic', 'Half-Ironman', 'Ironman'] as const).map((dist) => (
+          {availableDistances.map((dist) => (
             <button
               key={dist}
               onClick={() => setSelectedDistance(dist)}

@@ -13,7 +13,15 @@ export const races: Race[] = [
     elevation_m: 60,
     price_eur: 80,
     website: 'https://www.milanocityMarathon.com',
-    description: 'La maratona più famosa di Milano, percorso cittadino pianeggiante.'
+    description: 'La maratona più famosa di Milano, percorso cittadino pianeggiante.',
+    competition: 'Competitive',
+    associations: ['Fidal'],
+    startTimes: ['08:30'],
+    organizer: 'ASD Marathon Milano',
+    contactEmail: 'info@milanomarathon.it',
+    contactPhone: '+39 02 1234567',
+    instagram: 'https://instagram.com/milano_marathon',
+    flyerUrl: 'https://www.milanocityMarathon.com/flyer.pdf'
   },
   {
     id: '2',
@@ -83,7 +91,16 @@ export const races: Race[] = [
     elevation_m: 800,
     price_eur: 650,
     website: 'https://www.ironman.com/im-italy',
-    description: 'Il grande Ironman italiano: 3.8km nuoto, 180km bici, 42km corsa.'
+    description: 'Il grande Ironman italiano: 3.8km nuoto, 180km bici, 42km corsa.',
+    competition: 'Both',
+    associations: ['Ironman', 'UISP'],
+    startTimes: ['06:00', '07:00'],
+    organizer: 'Ironman Italy ASD',
+    contactEmail: 'cervia@ironman.com',
+    contactPhone: '+39 0544 987654',
+    instagram: 'https://instagram.com/ironman italy',
+    privateEmail: 'staff@ironman.com',
+    flyerUrl: 'https://www.ironman.com/im-italy/flyer.pdf'
   },
   {
     id: '7',

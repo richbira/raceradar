@@ -60,7 +60,7 @@ export default function RaceDetail() {
           </div>
         </div>
 
-        {/* Distanze dettagliate */}
+        {/* DIV PERCORSO */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">Percorso</h2>
           <div className="flex gap-6 flex-wrap">
@@ -86,6 +86,87 @@ export default function RaceDetail() {
           </div>
           <p className="text-gray-500 text-sm mt-4">{info.description}</p>
         </div>
+
+        {/* Dettagli organizzativi */}
+{(race.competition || race.associations || race.startTimes || race.organizer || race.contactEmail || race.contactPhone || race.instagram || race.privateEmail || race.flyerUrl) && (
+  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">
+      📋 Dettagli organizzativi
+    </h2>
+    <div className="space-y-2 text-gray-800 text-sm">
+      {race.competition && (
+        <div>
+          <span className="font-semibold">🏆 Competitività:</span> {race.competition}
+        </div>
+      )}
+      {race.associations && (
+        <div>
+          <span className="font-semibold">🤝 Associazioni:</span> {race.associations.join(', ')}
+        </div>
+      )}
+      {race.startTimes && (
+        <div>
+          <span className="font-semibold">⏰ Orari di partenza:</span> {race.startTimes.join(', ')}
+        </div>
+      )}
+      {race.organizer && (
+        <div>
+          <span className="font-semibold">🧑‍💼 Organizzatore:</span> {race.organizer}
+        </div>
+      )}
+      {race.contactEmail && (
+        <div>
+          <span className="font-semibold">📧 Email:</span>{' '}
+          <a href={`mailto:${race.contactEmail}`} className="text-blue-600 underline">
+            {race.contactEmail}
+          </a>
+        </div>
+      )}
+      {race.contactPhone && (
+        <div>
+          <span className="font-semibold">📞 Telefono:</span>{' '}
+          <a href={`tel:${race.contactPhone}`} className="text-blue-600 underline">
+            {race.contactPhone}
+          </a>
+        </div>
+      )}
+      {race.instagram && (
+        <div>
+          <span className="font-semibold">📸 Instagram:</span>{' '}
+          <a
+            href={race.instagram.startsWith('http') ? race.instagram : `https://instagram.com/${race.instagram}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline"
+          >
+            {race.instagram}
+          </a>
+        </div>
+      )}
+      {race.privateEmail && (
+        <div>
+          <span className="font-semibold">🔒 Email privata:</span>{' '}
+          <a href={`mailto:${race.privateEmail}`} className="text-blue-600 underline">
+            {race.privateEmail}
+          </a>
+        </div>
+      )}
+      {race.flyerUrl && (
+        <div>
+          <span className="font-semibold">📄 Volantino:</span>{' '}
+          <a
+            href={race.flyerUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline"
+          >
+            Scarica qui
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+)}
 
         {/* Descrizione */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">

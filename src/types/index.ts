@@ -21,7 +21,7 @@ export type Race = {
   id: string
   name: string
   type: RaceType
-  distance: RaceDistance
+  distances: RaceDistance []
   date: string
   city: string
   region: string

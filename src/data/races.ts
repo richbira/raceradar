@@ -4,7 +4,7 @@ export const races: Race[] = [
   {
     id: '1',
     name: 'Milano Marathon',
-    type: 'running',
+    type: 'Running',
     distance: 'marathon',
     date: '2025-04-06',
     city: 'Milano',
@@ -18,7 +18,7 @@ export const races: Race[] = [
   {
     id: '2',
     name: 'Roma Ostia Half Marathon',
-    type: 'running',
+    type: 'Running',
     distance: 'half-marathon',
     date: '2025-03-09',
     city: 'Roma',
@@ -32,7 +32,7 @@ export const races: Race[] = [
   {
     id: '3',
     name: 'Firenze Marathon',
-    type: 'running',
+    type: 'Running',
     distance: 'marathon',
     date: '2025-11-30',
     city: 'Firenze',
@@ -46,7 +46,7 @@ export const races: Race[] = [
   {
     id: '4',
     name: 'Napoli City Half Marathon',
-    type: 'running',
+    type: 'Running',
     distance: 'half-marathon',
     date: '2025-02-23',
     city: 'Napoli',
@@ -60,7 +60,7 @@ export const races: Race[] = [
   {
     id: '5',
     name: 'Torino 10K',
-    type: 'running',
+    type: 'Running',
     distance: '10k',
     date: '2025-05-18',
     city: 'Torino',
@@ -74,7 +74,7 @@ export const races: Race[] = [
   {
     id: '6',
     name: 'Ironman Italy Cervia',
-    type: 'triathlon',
+    type: 'Triathlon',
     distance: 'ironman',
     date: '2025-09-21',
     city: 'Cervia',
@@ -88,7 +88,7 @@ export const races: Race[] = [
   {
     id: '7',
     name: 'Lago Maggiore Trail',
-    type: 'trail',
+    type: 'Trail',
     distance: 'ultra',
     date: '2025-06-14',
     city: 'Verbania',
@@ -96,13 +96,13 @@ export const races: Race[] = [
     country: 'Italia',
     elevation_m: 3200,
     price_eur: 55,
-    website: 'https://www.lagomaggioretrail.it',
+    website: 'https://www.lagomaggioreTrail.it',
     description: 'Trail epico tra i monti del Lago Maggiore, 60km di natura pura.'
   },
   {
     id: '8',
     name: 'Venezia Marathon',
-    type: 'running',
+    type: 'Running',
     distance: 'marathon',
     date: '2025-10-26',
     city: 'Venezia',

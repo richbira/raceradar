@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { Race, RaceDistance, RaceType } from '../types'
 import { races } from '../data/races'
 import { useNavigate } from 'react-router-dom'
+import SearchAutocomplete from '../components/SearchAutocomplete'
 
 export default function Home() {
   const [search, setSearch] = useState('')
@@ -34,24 +35,18 @@ export default function Home() {
       {/* HEADER */}
       <div className="bg-blue-600 text-white py-10 px-4 text-center">
         <h1 className="text-4xl font-bold mb-2">🎯 RaceRadar</h1>
-        <p className="text-blue-100 text-lg">Trova le gare vicino a te</p>
+        <p className="text-blue-100 text-lg">Discover running races, triathlons and trail events</p>
       </div>
 
       {/* FILTRI */}
       <div className="max-w-4xl mx-auto px-4 py-6 flex flex-col gap-4">
 
         {/* Barra di ricerca */}
-        <input
-          type="text"
-          placeholder="Cerca per città, regione o nome gara..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+      <SearchAutocomplete value={search} onChange={setSearch} />
 
         {/* Filtro tipo */}
         <div className="flex gap-2 flex-wrap">
-          {(['all', 'running', 'triathlon', 'trail', 'cycling'] as const).map((type) => (
+          {(['all', 'Running', 'Triathlon', 'Trail', 'Cycling'] as const).map((type) => (
             <button
               key={type}
               onClick={() => setSelectedType(type)}
@@ -68,7 +63,7 @@ export default function Home() {
 
         {/* Filtro distanza */}
         <div className="flex gap-2 flex-wrap">
-          {(['all', '5k', '10k', 'half-marathon', 'marathon', 'ultra', 'sprint', 'olympic', 'half-ironman', 'ironman'] as const).map((dist) => (
+          {(['all', '5k', '10k', 'Half-Marathon', 'Marathon', 'Ultra', 'Sprint', 'Olympic', 'Half-Ironman', 'Ironman'] as const).map((dist) => (
             <button
               key={dist}
               onClick={() => setSelectedDistance(dist)}
@@ -89,8 +84,8 @@ export default function Home() {
       <div className="max-w-4xl mx-auto px-4 pb-10">
         <p className="text-gray-500 mb-4 text-sm">{filtered.length} gare trovate</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {filtered.map((race) => (
-            <RaceCard key={race.id} race={race} />
+          {filtered.map((race, index) => (
+          <RaceCard key={`${race.id}-${search}-${selectedType}-${selectedDistance}`} race={race} index={index} />
           ))}
         </div>
       </div>
@@ -99,13 +94,14 @@ export default function Home() {
   )
 }
 
-function RaceCard({ race }: { race: Race }) {
+function RaceCard({ race, index }: { race: Race, index: number }) {
   const navigate = useNavigate()
 
   return (
     <div
       onClick={() => navigate(`/race/${race.id}`)}
-      className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow cursor-pointer"
+      className="race-card-enter bg-white rounded-2xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow cursor-pointer"
+      style={{ animationDelay: `${index * 60}ms` }}
     >
       <div className="flex justify-between items-start mb-2">
         <span className="text-xs font-semibold uppercase tracking-wide text-blue-500">{race.type}</span>

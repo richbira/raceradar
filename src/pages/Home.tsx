@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import type { Race, RaceDistance, RaceType } from '../types'
 import { RACE_TYPES } from '../types'
-import { races } from '../data/races'
+import { useRaces } from '../hooks/useRaces'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import SearchAutocomplete from '../components/SearchAutocomplete'
 
@@ -18,6 +18,7 @@ const PAGE_SIZE = 10
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const { races, loading, error } = useRaces()
 
   // Leggi i filtri dall'URL
   const search = searchParams.get('q') ?? ''
@@ -55,23 +56,35 @@ const setParam = (key: string, value: string, resetPage = true) => {
 
   const availableDistances = DISTANCES_BY_TYPE[selectedType]
 
-  const filtered = useMemo(() => {
-    return races.filter((race) => {
-      const searchLower = search.toLowerCase()
-      const matchSearch =
-        race.city.toLowerCase().includes(searchLower) ||
-        race.region.toLowerCase().includes(searchLower) ||
-        race.name.toLowerCase().includes(searchLower)
-      const matchType = selectedType === 'all' || race.type === selectedType
-      const matchDistance = selectedDistance === 'all' || race.distances.includes(selectedDistance)
-      const matchDateFrom = !dateFrom || race.date >= dateFrom
-      const matchDateTo = !dateTo || race.date <= dateTo
-      return matchSearch && matchType && matchDistance && matchDateFrom && matchDateTo
-    })
-  }, [search, selectedType, selectedDistance, dateFrom, dateTo])
+const filtered = useMemo(() => {
+  return races.filter((race) => {
+    const searchLower = search.toLowerCase()
+    const matchSearch =
+      race.city.toLowerCase().includes(searchLower) ||
+      race.region.toLowerCase().includes(searchLower) ||
+      race.name.toLowerCase().includes(searchLower)
+    const matchType = selectedType === 'all' || race.type === selectedType
+    const matchDistance = selectedDistance === 'all' || race.distances.includes(selectedDistance)
+    const matchDateFrom = !dateFrom || race.date >= dateFrom
+    const matchDateTo = !dateTo || race.date <= dateTo
+    return matchSearch && matchType && matchDistance && matchDateFrom && matchDateTo
+  })
+}, [races, search, selectedType, selectedDistance, dateFrom, dateTo])
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+
+  if (loading) return (
+  <div className="min-h-screen flex items-center justify-center">
+    <p className="text-gray-400 animate-pulse">Caricamento gare...</p>
+  </div>
+)
+
+if (error) return (
+  <div className="min-h-screen flex items-center justify-center">
+    <p className="text-red-400">Errore: {error}</p>
+  </div>
+)
 
   return (
     <div className="min-h-screen bg-gray-50">

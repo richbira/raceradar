@@ -40,8 +40,8 @@ export type Race = {
   elevation_m: number
   price_eur: number
   price_note?: string    // nota testuale sui prezzi
-  website: string
-  description: string
+  website?: string
+  description?: string
   hyrox_categories?: string[]
   // campi opzionali che hai già aggiunto
   competition?: string

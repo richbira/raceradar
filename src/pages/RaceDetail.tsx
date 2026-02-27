@@ -1,19 +1,23 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { races } from "../data/races";
+import { useRace } from '../hooks/useRace'
 import { DISTANCE_INFO } from "../types";
 
 export default function RaceDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const race = races.find((r) => r.id === id);
+  const { race, loading, error } = useRace(id)
 
-  if (!race) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">Gara non trovata.</p>
-      </div>
-    );
-  }
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-gray-400 animate-pulse">Caricamento...</p>
+    </div>
+  )
+
+  if (error || !race) return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-gray-500">Gara non trovata.</p>
+    </div>
+  )
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -1,23 +1,22 @@
-import { useParams, useNavigate } from 'react-router-dom'
-import { races } from '../data/races'
-import { DISTANCE_INFO } from '../types'
+import { useParams, useNavigate } from "react-router-dom";
+import { races } from "../data/races";
+import { DISTANCE_INFO } from "../types";
 
 export default function RaceDetail() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const race = races.find((r) => r.id === id)
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const race = races.find((r) => r.id === id);
 
   if (!race) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-gray-500">Gara non trovata.</p>
       </div>
-    )
+    );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       {/* HEADER */}
       <div className="bg-blue-600 text-white py-10 px-4">
         <div className="max-w-2xl mx-auto">
@@ -53,35 +52,59 @@ export default function RaceDetail() {
       </div>
 
       {/* CONTENUTO */}
-      <div className="max-w-2xl mx-auto px-4 py-8 flex flex-col gap-6">
-
+      <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col gap-6">
         {/* Info principali */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-xs text-gray-400 uppercase tracking-wide">Data</p>
-            <p className="text-lg font-semibold text-gray-800">
-              📅 {new Date(race.date).toLocaleDateString('it-IT', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-              })}
-            </p>
-          </div>
+ <div>
+  <p className="text-base text-gray-400 uppercase tracking-wide">Data</p>
+  <p className="text-xl font-semibold text-gray-800">
+    {race.endDate
+      ? `📅 ${new Date(race.date).toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })} - ${new Date(race.endDate).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}`
+      : `📅 ${new Date(race.date).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}`
+    }
+  </p>
+</div>
 
           <div>
-            <p className="text-xs text-gray-400 uppercase tracking-wide">Costo iscrizione</p>
-            <p className="text-lg font-semibold text-gray-800">
+            <p className="text-base text-gray-400 uppercase tracking-wide">
+              Costo iscrizione
+            </p>
+            <p className="text-xl font-semibold text-gray-800">
               💶 {race.price_eur}€
             </p>
           </div>
 
+          {race.type !== "Hyrox" && (
+            <div>
+              <p className="text-base text-gray-400 uppercase tracking-wide">
+                Dislivello
+              </p>
+              <p className="text-xl font-semibold text-gray-800">
+                {race.elevation_m === 0
+                  ? "⛰️ Pianeggiante"
+                  : `⛰️ ${race.elevation_m}m`}
+              </p>
+            </div>
+          )}
+
+
           <div>
-            <p className="text-xs text-gray-400 uppercase tracking-wide">Dislivello</p>
-            <p className="text-lg font-semibold text-gray-800">
-              ⛰️ {race.elevation_m}m
+            <p className="text-base text-gray-400 uppercase tracking-wide">
+              Note aggiuntive sul costo 💶
+            </p>
+            <p className="text-xl text-gray-600 font-semibold leading-relaxed whitespace-pre-line">
+               {race.price_note}
             </p>
           </div>
 
+          {race.venue && (
+            <div>
+              <p className="text-xs text-gray-400 uppercase tracking-wide">Venue</p>
+              <p className="text-xl font-bold text-gray-800">
+                🏟️ {race.venue}
+              </p>
+            </div>
+          )}
           {/*}
           <div>
             <p className="text-xs text-gray-400 uppercase tracking-wide">Distanze disponibili</p>
@@ -93,44 +116,90 @@ export default function RaceDetail() {
 
         {/* Percorsi */}
         {race.distances.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4 text-center">
               Percorsi
             </h2>
-
-            {/* single-row, shrink items to stay on one line */}
-            <div className="flex flex-row flex-nowrap gap-4 items-start">
+            <div className="flex flex-row flex-wrap gap-4 items-start justify-center">
               {race.distances.map((dist) => {
-                const info = DISTANCE_INFO[dist]
+                const info = DISTANCE_INFO[dist];
+
+                // Icona atleti per Hyrox
+                const athleteIcons: Record<string, string> = {
+                  "Hyrox-Single": "🏃",
+                  "Hyrox-Doubles": "🏃🏃",
+                  "Hyrox-Relay": "🏃🏃🏃🏃",
+                };
+                const isHyrox = dist.startsWith("Hyrox");
+
                 return (
                   <div key={dist} className="flex-1 min-w-0 text-center">
-                    <h3 className="font-semibold text-gray-800 mb-1 truncate">{info.label}</h3>
+                    <h3 className="font-semibold text-gray-800 mb-2">
+                      {info.label}
+                    </h3>
 
-                    <div className="flex gap-2 justify-center items-center">
-                      {info.swim && (
-                        <div className="text-center">
-                          <p className="text-xl">🏊</p>
-                          <p className="text-xs font-bold text-gray-800 truncate">{info.swim}</p>
-                        </div>
-                      )}
-
-                      {info.bike && (
-                        <div className="text-center">
-                          <p className="text-xl">🚴</p>
-                          <p className="text-xs font-bold text-gray-800 truncate">{info.bike}</p>
-                        </div>
-                      )}
-
-                      <div className="text-center">
-                        <p className="text-xl">🏃</p>
-                        <p className="text-xs font-bold text-gray-800 truncate">{info.run}</p>
+                    {isHyrox ? (
+                      // Visualizzazione Hyrox
+                      <div className="flex flex-col items-center gap-1">
+                        <p className="text-2xl tracking-widest">
+                          {athleteIcons[dist]}
+                        </p>
+                        <p className="text-xs font-bold text-gray-800">
+                          {info.run} corsa totale
+                        </p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {info.description}
+                        </p>
                       </div>
-                    </div>
-
-                    <p className="text-gray-500 text-xs mt-3 truncate">{info.description}</p>
+                    ) : (
+                      // Visualizzazione normale
+                      <div className="flex gap-2 justify-center items-center flex-wrap">
+                        {info.swim && (
+                          <div className="text-center">
+                            <p className="text-xl">🏊</p>
+                            <p className="text-xs font-bold text-gray-800">
+                              {info.swim}
+                            </p>
+                          </div>
+                        )}
+                        {info.bike && (
+                          <div className="text-center">
+                            <p className="text-xl">🚴</p>
+                            <p className="text-xs font-bold text-gray-800">
+                              {info.bike}
+                            </p>
+                          </div>
+                        )}
+                        <div className="text-center">
+                          <p className="text-xl">🏃</p>
+                          <p className="text-xs font-bold text-gray-800">
+                            {info.run}
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )
+                );
               })}
+            </div>
+          </div>
+        )}
+
+        {/* Categorie Hyrox */}
+        {race.hyrox_categories && race.hyrox_categories.length > 0 && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">
+              💪 Categorie disponibili
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {race.hyrox_categories.map((cat) => (
+                <span
+                  key={cat}
+                  className="text-sm bg-orange-50 text-orange-700 border border-orange-200 px-3 py-1.5 rounded-full font-medium"
+                >
+                  {cat}
+                </span>
+              ))}
             </div>
           </div>
         )}
@@ -144,7 +213,15 @@ export default function RaceDetail() {
         </div>
 
         {/* Dettagli organizzativi */}
-        {(race.competition || race.associations || race.startTimes || race.organizer || race.contactEmail || race.contactPhone || race.instagram || race.privateEmail || race.flyerUrl) && (
+        {(race.competition ||
+          race.associations ||
+          race.startTimes ||
+          race.organizer ||
+          race.contactEmail ||
+          race.contactPhone ||
+          race.instagram ||
+          race.privateEmail ||
+          race.flyerUrl) && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">
               📋 Dettagli organizzativi
@@ -152,46 +229,56 @@ export default function RaceDetail() {
             <div className="space-y-2 text-gray-800 text-sm">
               {race.competition && (
                 <div>
-                  <span className="font-semibold">🏆 Competitività:</span> {race.competition}
+                  <span className="font-semibold">🏆 Competitività:</span>{" "}
+                  {race.competition}
                 </div>
               )}
               {race.associations && (
                 <div>
-                  <span className="font-semibold">🤝 Associazioni:</span> {race.associations.join(', ')}
+                  <span className="font-semibold">🤝 Associazioni:</span>{" "}
+                  {race.associations.join(", ")}
                 </div>
               )}
               {race.startTimes && (
                 <div>
-                  <span className="font-semibold">⏰ Orari di partenza:</span> {race.startTimes.join(', ')}
+                  <span className="font-semibold">⏰ Orari di partenza:</span>{" "}
+                  {race.startTimes.join(", ")}
                 </div>
               )}
               {race.organizer && (
                 <div>
-                  <span className="font-semibold">🧑‍💼 Organizzatore:</span> {race.organizer}
+                  <span className="font-semibold">🧑‍💼 Organizzatore:</span>{" "}
+                  {race.organizer}
                 </div>
               )}
               {race.contactEmail && (
                 <div>
-                  <span className="font-semibold">📧 Email:</span>{' '}
-                  <a href={`mailto:${race.contactEmail}`} className="text-blue-600 underline">
+                  <span className="font-semibold">📧 Email:</span>{" "}
+                  <a
+                    href={`mailto:${race.contactEmail}`}
+                    className="text-blue-600 underline"
+                  >
                     {race.contactEmail}
                   </a>
                 </div>
               )}
               {race.contactPhone && (
                 <div>
-                  <span className="font-semibold">📞 Telefono:</span>{' '}
-                  <a href={`tel:${race.contactPhone}`} className="text-blue-600 underline">
+                  <span className="font-semibold">📞 Telefono:</span>{" "}
+                  <a
+                    href={`tel:${race.contactPhone}`}
+                    className="text-blue-600 underline"
+                  >
                     {race.contactPhone}
                   </a>
                 </div>
               )}
               {race.instagram && (
                 <div>
-                  <span className="font-semibold">📸 Instagram:</span>{' '}
+                  <span className="font-semibold">📸 Instagram:</span>{" "}
                   <a
                     href={
-                      race.instagram.startsWith('http')
+                      race.instagram.startsWith("http")
                         ? race.instagram
                         : `https://instagram.com/${race.instagram}`
                     }
@@ -205,15 +292,18 @@ export default function RaceDetail() {
               )}
               {race.privateEmail && (
                 <div>
-                  <span className="font-semibold">🔒 Email privata:</span>{' '}
-                  <a href={`mailto:${race.privateEmail}`} className="text-blue-600 underline">
+                  <span className="font-semibold">🔒 Email privata:</span>{" "}
+                  <a
+                    href={`mailto:${race.privateEmail}`}
+                    className="text-blue-600 underline"
+                  >
                     {race.privateEmail}
                   </a>
                 </div>
               )}
               {race.flyerUrl && (
                 <div>
-                  <span className="font-semibold">📄 Volantino:</span>{' '}
+                  <span className="font-semibold">📄 Volantino:</span>{" "}
                   <a
                     href={race.flyerUrl}
                     target="_blank"
@@ -237,8 +327,7 @@ export default function RaceDetail() {
         >
           🔗 Vai al sito ufficiale
         </a>
-
       </div>
     </div>
-  )
+  );
 }

@@ -4,7 +4,13 @@ RaceDistance    → definisce le distanze possibili
 Race            → usa RaceType e RaceDistance come "mattoncini"
 DISTANCE_INFO   → usa RaceDistance come chiave per le info dettagliate
 */
-export type RaceType = 'Running' | 'Triathlon' | 'Trail' | 'Cycling' 
+export type RaceType = 'Running' | 'Triathlon' | 'Trail' | 'Cycling' | 'Hyrox'
+export const RACE_TYPES: RaceType[] = ['Running', 'Triathlon', 'Trail', 'Cycling', 'Hyrox']
+// Il formato della gara (quello che conta per la ricerca)
+export type HyroxFormat = 'Single' | 'Doubles' | 'Relay'
+
+// La categoria appartiene al PARTECIPANTE, non alla gara
+// Una gara Hyrox Single ha sempre sia Open che Pro, sia Uomini che Donne
 
 export type RaceDistance =
   | '5k'
@@ -16,31 +22,37 @@ export type RaceDistance =
   | 'Olympic'
   | 'Half-Ironman'
   | 'Ironman'
+  | 'Hyrox-Single'
+  | 'Hyrox-Doubles'
+  | 'Hyrox-Relay'
 
 export type Race = {
   id: string
   name: string
   type: RaceType
-  distances: RaceDistance []
+  distances: RaceDistance[]
   date: string
+  endDate?: string    // data fine (opzionale)
   city: string
   region: string
   country: string
+  venue?: string  // es. "Allianz Cloud Milano"
   elevation_m: number
   price_eur: number
+  price_note?: string    // nota testuale sui prezzi
   website: string
   description: string
-
-  // nuovi campi organizzativi (tutti opzionali per retrocompatibilità)
-  competition?: 'Competitive' | 'Non‑competitive' | 'Both'
-  associations?: string[]          // es. ['Fidal', 'UISP']
-  startTimes?: string[]            // orari di partenza
-  organizer?: string               // ente organizzatore
-  contactEmail?: string            // email pubblica
-  contactPhone?: string            // telefono
-  instagram?: string               // link o handle
-  privateEmail?: string            // mail riservata/staff
-  flyerUrl?: string                // URL al volantino o PDF
+  hyrox_categories?: string[]
+  // campi opzionali che hai già aggiunto
+  competition?: string
+  associations?: string[]
+  startTimes?: string[]
+  organizer?: string
+  contactEmail?: string
+  contactPhone?: string
+  instagram?: string
+  privateEmail?: string
+  flyerUrl?: string
 }
 
 export const DISTANCE_INFO: Record<RaceDistance, {
@@ -59,4 +71,7 @@ export const DISTANCE_INFO: Record<RaceDistance, {
   'Olympic':       { label: 'Olympic Triathlon · 51 km', description: 'Olympic distance triathlon', swim: '1.5 km', bike: '40 km',  run: '10 km' },
   'Half-Ironman':  { label: 'Half Ironman 70.3',         description: 'Middle distance triathlon',  swim: '1.9 km', bike: '90 km',  run: '21.1 km' },
   'Ironman':       { label: 'Ironman · 226 km',          description: 'Full distance triathlon',    swim: '3.8 km', bike: '180 km', run: '42.2 km' },
+  'Hyrox-Single':  { label: 'Hyrox Single',  description: '8x1km run + 8 workout stations', run: '8 km' },
+  'Hyrox-Doubles': { label: 'Hyrox Doubles', description: '8x1km run + 8 stations', run: '8 km' },
+  'Hyrox-Relay':   { label: 'Hyrox Relay',   description: 'each runs 2km + 2 stations', run: '8 km' },
 }

@@ -4,14 +4,16 @@ import { races } from '../data/races'
 import { useNavigate } from 'react-router-dom'
 import SearchAutocomplete from '../components/SearchAutocomplete'
 
-const ALL_TYPES: (RaceType | 'all')[] = ['all', 'Running', 'Triathlon', 'Trail', 'Cycling']
+import { RACE_TYPES } from '../types'
+const ALL_TYPES: (RaceType | 'all')[] = ['all', ...RACE_TYPES]
 
 const DISTANCES_BY_TYPE: Record<RaceType | 'all', (RaceDistance | 'all')[]> = {
-  all: ['all', '5k', '10k', 'Half-Marathon', 'Marathon', 'Ultra', 'Sprint', 'Olympic', 'Half-Ironman', 'Ironman'],
+  all: ['all', '5k', '10k', 'Half-Marathon', 'Marathon', 'Ultra', 'Sprint', 'Olympic', 'Half-Ironman', 'Ironman', 'Hyrox-Single', 'Hyrox-Doubles', 'Hyrox-Relay'],
   Running: ['all', '5k', '10k', 'Half-Marathon', 'Marathon', 'Ultra'],
   Triathlon: ['all', 'Sprint', 'Olympic', 'Half-Ironman', 'Ironman'],
   Trail: ['all', 'Ultra'],
   Cycling: ['all'],
+  Hyrox: ['all', 'Hyrox-Single', 'Hyrox-Doubles', 'Hyrox-Relay'],
 }
 
 export default function Home() {
@@ -174,9 +176,11 @@ function RaceCard({ race, index }: { race: Race; index: number }) {
       <h2 className="text-lg font-bold text-gray-800 mb-1">{race.name}</h2>
       <p className="text-sm text-gray-500 mb-3">📍 {race.city}, {race.region}</p>
       <div className="flex justify-between text-sm text-gray-600">
-        <span>📅 {new Date(race.date).toLocaleDateString('it-IT')}</span>
+        📅 {new Date(race.date).toLocaleDateString('it-IT')}
+                  {race.endDate && ` - ${new Date(race.endDate).toLocaleDateString('it-IT')}`}
         <span>💶 {race.price_eur}€</span>
       </div>
+      
     </div>
   )
 }

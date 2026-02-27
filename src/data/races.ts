@@ -136,7 +136,7 @@ export const races: Race[] = [
     type: 'Running',
     distances: ['Half-Marathon', '10k'],
     date: '2025-04-06',
-    city: 'Milano',
+    city: 'Milan',
     region: 'Lombardia',
     country: 'Italia',
     elevation_m: 60,

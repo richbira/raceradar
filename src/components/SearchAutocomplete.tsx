@@ -4,9 +4,10 @@ import { races } from '../data/races'
 interface Props {
   value: string
   onChange: (value: string) => void
+  onSelect: () => void
 }
 
-export default function SearchAutocomplete({ value, onChange }: Props) {
+export default function SearchAutocomplete({ value, onChange, onSelect }: Props) {
   const [showSuggestions, setShowSuggestions] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -33,31 +34,33 @@ export default function SearchAutocomplete({ value, onChange }: Props) {
   }, [])
 
   return (
-    <div ref={containerRef} className="relative w-full">
-      <input
-        type="text"
-        placeholder="Cerca per città, regione o nome gara..."
-        value={value}
-        onChange={(e) => {
-          onChange(e.target.value)
-          setShowSuggestions(true)
-        }}
-        onFocus={() => setShowSuggestions(true)}
-        className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-      />
+    <div ref={containerRef} className="relative w-full h-full">
+      <div className="flex flex-col justify-center h-full">
+        <p className="text-xs font-bold text-gray-800 mb-1">Dove</p>
+        <input
+          type="text"
+          placeholder="Cerca città o regione..."
+          value={value}
+          onChange={(e) => { onChange(e.target.value); setShowSuggestions(true) }}
+          onFocus={() => setShowSuggestions(true)}
+          className="w-full focus:outline-none text-sm text-gray-500 bg-transparent placeholder-gray-400"
+        />
+      </div>
 
       {showSuggestions && suggestions.length > 0 && (
-        <ul className="absolute z-10 w-full bg-white border border-gray-200 rounded-xl shadow-lg mt-1 overflow-hidden">
-          {suggestions.map((city) => (
+          <ul className="absolute left-0 right-0 top-full mt-6 z-50 bg-white border border-gray-100 rounded-2xl shadow-xl overflow-hidden">          {suggestions.map((city, index) => (
             <li
               key={city}
-              onClick={() => {
-                onChange(city)
-                setShowSuggestions(false)
-              }}
-              className="px-4 py-3 hover:bg-blue-50 cursor-pointer text-gray-700 flex items-center gap-2"
+              onClick={() => { onChange(city); setShowSuggestions(false); onSelect() }}
+              className="suggestion-enter px-4 py-3 hover:bg-blue-50 cursor-pointer flex items-center gap-3 border-b border-gray-50 last:border-0"
+              style={{ animationDelay: `${index * 50}ms` }}
             >
-              📍 {city}
+              <span className="text-blue-400">📍</span>
+              <div className="flex-1">
+                <p className="font-medium text-gray-800">{city}</p>
+                <p className="text-xs text-gray-400">Italia</p>
+              </div>
+              <span className="text-gray-400 font-bold text-sm">→</span>
             </li>
           ))}
         </ul>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import type { Race } from '../types'
+import { mapRace } from './mapRace' // Importiamo il tuo mapper
 
 export function useRaces() {
   const [races, setRaces] = useState<Race[]>([])
@@ -18,34 +19,7 @@ export function useRaces() {
       if (error) {
         setError(error.message)
       } else {
-        // Supabase usa snake_case, convertiamo in camelCase
-        const mapped: Race[] = (data ?? []).map((r) => ({
-          id: r.id,
-          name: r.name,
-          type: r.type,
-          distances: r.distances,
-          date: r.date,
-          endDate: r.end_date,
-          city: r.city,
-          region: r.region,
-          country: r.country,
-          elevation_m: r.elevation_m,
-          price_eur: r.price_eur,
-          price_note: r.price_note,
-          website: r.website,
-          description: r.description,
-          venue: r.venue,
-          competition: r.competition,
-          associations: r.associations,
-          startTimes: r.start_times,
-          organizer: r.organizer,
-          contactEmail: r.contact_email,
-          contactPhone: r.contact_phone,
-          instagram: r.instagram,
-          privateEmail: r.private_email,
-          flyerUrl: r.flyer_url,
-          hyrox_categories: r.hyrox_categories,
-        }))
+        const mapped = (data ?? []).map(mapRace)
         setRaces(mapped)
       }
       setLoading(false)

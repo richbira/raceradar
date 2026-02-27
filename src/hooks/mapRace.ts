@@ -3,6 +3,18 @@ import type { Race } from '../types'
 
 type RaceRow = Database['public']['Tables']['races']['Row']
 
+{
+    /*
+    SUPABASE (PostgreSQL)          TYPESCRIPT (React)
+    ─────────────────────          ──────────────────
+    usa snake_case          ≠      usa camelCase
+    end_date                →      endDate
+    start_times             →      startTimes
+    contact_email           →      contactEmail
+    flyer_url               →      flyerUrl
+    null (campo vuoto)      →      undefined 
+    */
+}
 export function mapRace(r: RaceRow): Race {
   return {
     id: r.id,

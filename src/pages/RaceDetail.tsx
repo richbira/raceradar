@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useRace } from '../hooks/useRace'
 import { DISTANCE_INFO } from "../types";
+import Footer from "../components/Footer";
 
 export default function RaceDetail() {
   const { id } = useParams();
@@ -332,6 +333,8 @@ export default function RaceDetail() {
           🔗 Vai al sito ufficiale
         </a>
       </div>
+
+      <Footer />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { RACE_TYPES } from "../types";
 import { useRaces } from "../hooks/useRaces";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import SearchAutocomplete from "../components/SearchAutocomplete";
+import Footer from "../components/Footer";
 
 const DISTANCES_BY_TYPE: Record<RaceType | "all", (RaceDistance | "all")[]> = {
   all: [
@@ -70,6 +71,11 @@ export default function Home() {
     setSearchParams(next);
   };
 
+  const allCities = useMemo(
+  () => [...new Set(races.map((r) => r.city))],
+  [races]
+  );
+
   const availableDistances = DISTANCES_BY_TYPE[selectedType];
 
   const filtered = useMemo(() => {
@@ -128,8 +134,9 @@ export default function Home() {
           <div className="flex-1 flex items-center px-6 py-4 rounded-full hover:bg-gray-100 transition-colors cursor-text min-w-0">
             <SearchAutocomplete
               value={search}
-              onChange={(val) => setParam("q", val)}
+              onChange={(val) => setParam('q', val)}
               onSelect={() => {}}
+              cities={allCities}
             />
           </div>
           <div className="w-px bg-gray-200 my-3" />
@@ -284,6 +291,8 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 }

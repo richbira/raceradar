@@ -4,6 +4,10 @@ import RaceDetail from './pages/RaceDetail'
 import ProposeRace from './pages/ProposeRace'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard'
+import Termini from './pages/footer/Termini'
+import Privacy from './pages/footer/Privacy'
+import CookieBanner from './components/CookieBanner'
+import Contatti from './pages/footer/Contatti'
 
 function App() {
   return (
@@ -12,9 +16,17 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/race/:id" element={<RaceDetail />} />
         <Route path="/proponi-gara" element={<ProposeRace />} />
+
+        {/* Pagine per admin*/}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminDashboard />} />
+
+        {/* Pagine FOOTER*/}
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/termini" element={<Termini />} />
+        <Route path="/contatti" element={<Contatti />} />
       </Routes>
+      <CookieBanner />
     </BrowserRouter>
   )
 }

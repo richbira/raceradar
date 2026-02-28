@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { RACE_TYPES } from '../types'
 import type { RaceType } from '../types'
+import Footer from '../components/Footer'
 
 const DISTANCES_BY_TYPE: Record<RaceType, string[]> = {
   Running: ['5k', '10k', 'Half-Marathon', 'Marathon', 'Ultra'],
@@ -320,6 +321,7 @@ export default function ProposeRace() {
         </button>
 
       </div>
+      <Footer />
     </div>
   )
 }

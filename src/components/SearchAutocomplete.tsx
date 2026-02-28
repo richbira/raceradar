@@ -1,27 +1,22 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
-import { races } from '../data/races'
 
 interface Props {
   value: string
   onChange: (value: string) => void
   onSelect: () => void
+  cities: string[]  // ← prop esterna invece di importare races
 }
 
-export default function SearchAutocomplete({ value, onChange, onSelect }: Props) {
+export default function SearchAutocomplete({ value, onChange, onSelect, cities }: Props) {
   const [showSuggestions, setShowSuggestions] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const allCities = useMemo(
-    () => [...new Set(races.map((r) => r.city))],
-    []
-  )
-
   const suggestions = useMemo(() => {
     if (value.length < 2) return []
-    return allCities.filter((city) =>
+    return cities.filter((city) =>
       city.toLowerCase().includes(value.toLowerCase())
     )
-  }, [value, allCities])
+  }, [value, cities])
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -48,7 +43,8 @@ export default function SearchAutocomplete({ value, onChange, onSelect }: Props)
       </div>
 
       {showSuggestions && suggestions.length > 0 && (
-          <ul className="absolute left-0 right-0 top-full mt-6 z-50 bg-white border border-gray-100 rounded-2xl shadow-xl overflow-hidden">          {suggestions.map((city, index) => (
+        <ul className="absolute left-0 right-0 top-full mt-6 z-50 bg-white border border-gray-100 rounded-2xl shadow-xl overflow-hidden">
+          {suggestions.map((city, index) => (
             <li
               key={city}
               onClick={() => { onChange(city); setShowSuggestions(false); onSelect() }}

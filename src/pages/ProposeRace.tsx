@@ -33,6 +33,7 @@ export default function ProposeRace() {
     contact_email: '',
     instagram: '',
   })
+  // aggiungere venue,contact_phone, orario di partenza,
 
   const set = (key: string, value: string) =>
     setForm((prev) => ({ ...prev, [key]: value }))

@@ -104,6 +104,69 @@ export type Database = {
         }
         Relationships: []
       }
+      pending_run_clubs: {
+        Row: {
+          city: string
+          contact_email: string | null
+          country: string
+          days: string[] | null
+          description: string | null
+          id: string
+          instagram: string | null
+          level: string[] | null
+          name: string
+          organizer: string | null
+          price_eur: number | null
+          region: string
+          status: string | null
+          strava: string | null
+          submitted_at: string | null
+          time: string | null
+          website: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          city: string
+          contact_email?: string | null
+          country?: string
+          days?: string[] | null
+          description?: string | null
+          id?: string
+          instagram?: string | null
+          level?: string[] | null
+          name: string
+          organizer?: string | null
+          price_eur?: number | null
+          region: string
+          status?: string | null
+          strava?: string | null
+          submitted_at?: string | null
+          time?: string | null
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          city?: string
+          contact_email?: string | null
+          country?: string
+          days?: string[] | null
+          description?: string | null
+          id?: string
+          instagram?: string | null
+          level?: string[] | null
+          name?: string
+          organizer?: string | null
+          price_eur?: number | null
+          region?: string
+          status?: string | null
+          strava?: string | null
+          submitted_at?: string | null
+          time?: string | null
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
       races: {
         Row: {
           associations: string[] | null
@@ -197,14 +260,16 @@ export type Database = {
       run_clubs: {
         Row: {
           city: string
+          contact_email: string | null
           country: string
           created_at: string | null
           days: string[] | null
           description: string | null
           id: string
           instagram: string | null
-          level: string
+          level: string[]
           name: string
+          organizer: string | null
           price_eur: number | null
           region: string
           status: string | null
@@ -215,14 +280,16 @@ export type Database = {
         }
         Insert: {
           city: string
+          contact_email?: string | null
           country?: string
           created_at?: string | null
           days?: string[] | null
           description?: string | null
           id?: string
           instagram?: string | null
-          level: string
+          level: string[]
           name: string
+          organizer?: string | null
           price_eur?: number | null
           region: string
           status?: string | null
@@ -233,14 +300,16 @@ export type Database = {
         }
         Update: {
           city?: string
+          contact_email?: string | null
           country?: string
           created_at?: string | null
           days?: string[] | null
           description?: string | null
           id?: string
           instagram?: string | null
-          level?: string
+          level?: string[]
           name?: string
+          organizer?: string | null
           price_eur?: number | null
           region?: string
           status?: string | null

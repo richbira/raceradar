@@ -75,3 +75,24 @@ export const DISTANCE_INFO: Record<RaceDistance, {
   'Hyrox-Doubles': { label: 'Hyrox Doubles', description: '8x1km run + 8 stations', run: '8 km' },
   'Hyrox-Relay':   { label: 'Hyrox Relay',   description: 'each runs 2km + 2 stations', run: '8 km' },
 }
+
+// RUN CLUBS
+export type RunClub = {
+  id: string
+  name: string
+  city: string
+  region: string
+  country: string
+  level?: string[]
+  days?: string[]
+  time?: string
+  price_eur?: number
+  description?: string
+  website?: string
+  instagram?: string
+  whatsapp?: string
+  strava?: string
+  organizer?: string
+  contactEmail?: string
+  status?: string
+}

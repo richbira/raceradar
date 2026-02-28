@@ -9,6 +9,7 @@ export default function Footer() {
           <Link to="/privacy" className="hover:text-gray-600 transition-colors">Privacy Policy</Link>
           <Link to="/termini" className="hover:text-gray-600 transition-colors">Termini</Link>
           <Link to="/contatti" className="hover:text-gray-600 transition-colors">Contatti</Link>
+          <Link to="/run-clubs" className="hover:text-gray-600 transition-colors">Trova il tuo Run Club</Link>
         </div>
       </div>
     </footer>

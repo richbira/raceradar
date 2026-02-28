@@ -217,111 +217,81 @@ export default function RaceDetail() {
           <p className="text-gray-700">{race.description}</p>
         </div>
 
-        {/* Dettagli organizzativi */}
-        {(race.competition ||
-          race.associations ||
-          race.startTimes ||
-          race.organizer ||
-          race.contactEmail ||
-          race.contactPhone ||
-          race.instagram ||
-          race.privateEmail ||
-          race.flyerUrl) && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">
-              📋 Dettagli organizzativi
-            </h2>
-            <div className="space-y-2 text-gray-800 text-sm">
-              {race.competition && (
-                <div>
-                  <span className="font-semibold">🏆 Competitività:</span>{" "}
-                  {race.competition}
-                </div>
-              )}
-              {race.associations && (
-                <div>
-                  <span className="font-semibold">🤝 Associazioni:</span>{" "}
-                  {race.associations.join(", ")}
-                </div>
-              )}
-              {race.startTimes && (
-                <div>
-                  <span className="font-semibold">⏰ Orari di partenza:</span>{" "}
-                  {race.startTimes.join(", ")}
-                </div>
-              )}
-              {race.organizer && (
-                <div>
-                  <span className="font-semibold">🧑‍💼 Organizzatore:</span>{" "}
-                  {race.organizer}
-                </div>
-              )}
-              {race.contactEmail && (
-                <div>
-                  <span className="font-semibold">📧 Email:</span>{" "}
-                  <a
-                    href={`mailto:${race.contactEmail}`}
-                    className="text-blue-600 underline"
-                  >
-                    {race.contactEmail}
-                  </a>
-                </div>
-              )}
-              {race.contactPhone && (
-                <div>
-                  <span className="font-semibold">📞 Telefono:</span>{" "}
-                  <a
-                    href={`tel:${race.contactPhone}`}
-                    className="text-blue-600 underline"
-                  >
-                    {race.contactPhone}
-                  </a>
-                </div>
-              )}
-              {race.instagram && (
-                <div>
-                  <span className="font-semibold">📸 Instagram:</span>{" "}
-                  <a
-                    href={
-                      race.instagram.startsWith("http")
-                        ? race.instagram
-                        : `https://instagram.com/${race.instagram}`
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 underline"
-                  >
-                    {race.instagram}
-                  </a>
-                </div>
-              )}
-              {race.privateEmail && (
-                <div>
-                  <span className="font-semibold">🔒 Email privata:</span>{" "}
-                  <a
-                    href={`mailto:${race.privateEmail}`}
-                    className="text-blue-600 underline"
-                  >
-                    {race.privateEmail}
-                  </a>
-                </div>
-              )}
-              {race.flyerUrl && (
-                <div>
-                  <span className="font-semibold">📄 Volantino:</span>{" "}
-                  <a
-                    href={race.flyerUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 underline"
-                  >
-                    Scarica qui
-                  </a>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+{/* Social e contatti */}
+<div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+  <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">Contatti e Social</h2>
+  <div className="flex flex-col gap-3">
+
+    {race.website && (
+      <a href={race.website} target="_blank" rel="noopener noreferrer"
+         className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition-colors">
+        <span className="text-xl">🌐</span>
+        <div>
+          <p className="font-medium text-sm">Sito web</p>
+          <p className="text-xs text-gray-400">{race.website}</p>
+        </div>
+      </a>
+    )}
+
+    {race.instagram && (
+      <a href={race.instagram.startsWith("http") ? race.instagram : `https://instagram.com/${race.instagram.replace('@','')}`}
+         target="_blank" rel="noopener noreferrer"
+         className="flex items-center gap-3 text-gray-700 hover:text-pink-500 transition-colors">
+        <span className="text-xl">📸</span>
+        <div>
+          <p className="font-medium text-sm">Instagram</p>
+          <p className="text-xs text-gray-400">{race.instagram}</p>
+        </div>
+      </a>
+    )}
+
+    {race.contactEmail && (
+      <a href={`mailto:${race.contactEmail}`}
+         className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition-colors">
+        <span className="text-xl">📧</span>
+        <div>
+          <p className="font-medium text-sm">Email</p>
+          <p className="text-xs text-gray-400">{race.contactEmail}</p>
+        </div>
+      </a>
+    )}
+
+    {race.privateEmail && (
+      <a href={`mailto:${race.privateEmail}`}
+         className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition-colors">
+        <span className="text-xl">🔒</span>
+        <div>
+          <p className="font-medium text-sm">Email privata</p>
+          <p className="text-xs text-gray-400">{race.privateEmail}</p>
+        </div>
+      </a>
+    )}
+
+    {race.contactPhone && (
+      <a href={`tel:${race.contactPhone}`}
+         className="flex items-center gap-3 text-gray-700 hover:text-green-500 transition-colors">
+        <span className="text-xl">📞</span>
+        <div>
+          <p className="font-medium text-sm">Telefono</p>
+          <p className="text-xs text-gray-400">{race.contactPhone}</p>
+        </div>
+      </a>
+    )}
+
+    {race.flyerUrl && (
+      <a href={race.flyerUrl} target="_blank" rel="noopener noreferrer"
+         className="flex items-center gap-3 text-gray-700 hover:text-gray-800 transition-colors">
+        <span className="text-xl">📄</span>
+        <div>
+          <p className="font-medium text-sm">Volantino</p>
+          <p className="text-xs text-gray-400">Scarica qui</p>
+        </div>
+      </a>
+    )}
+
+  </div>
+</div>
+
 
         {/* Link iscrizione */}
         <a

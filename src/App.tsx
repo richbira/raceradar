@@ -8,6 +8,9 @@ import Termini from './pages/footer/Termini'
 import Privacy from './pages/footer/Privacy'
 import CookieBanner from './components/CookieBanner'
 import Contatti from './pages/footer/Contatti'
+import RunClubs from './pages/runClub/RunClubs'
+import ProposeRunClub from './pages/runClub/ProposeRunClub'
+import RunClubDetail from './pages/runClub/RunClubDetail'
 
 function App() {
   return (
@@ -25,6 +28,11 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/termini" element={<Termini />} />
         <Route path="/contatti" element={<Contatti />} />
+        
+        {/* Pagine Run Club*/}
+        <Route path="/run-clubs" element={<RunClubs />} />
+        <Route path="/proponi-run-club" element={<ProposeRunClub />} />
+        <Route path="/run-clubs/:id" element={<RunClubDetail />} />
       </Routes>
       <CookieBanner />
     </BrowserRouter>

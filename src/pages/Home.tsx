@@ -5,6 +5,8 @@ import { useRaces } from "../hooks/useRaces";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import SearchAutocomplete from "../components/SearchAutocomplete";
 import Footer from "../components/Footer";
+import Header from "../components/Header";
+import SkeletonCard from '../components/SkeletonCard'
 
 const DISTANCES_BY_TYPE: Record<RaceType | "all", (RaceDistance | "all")[]> = {
   all: [
@@ -103,12 +105,19 @@ export default function Home() {
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
-  if (loading)
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-400 animate-pulse">Caricamento gare...</p>
+if (loading) return (
+  <div className="min-h-screen bg-gray-50">
+    <Header />
+    <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <SkeletonCard key={i} />
+        ))}
       </div>
-    );
+    </div>
+    <Footer />
+  </div>
+)
 
   if (error)
     return (
@@ -120,12 +129,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* HEADER */}
-      <div className="bg-blue-600 text-white py-10 px-4 text-center">
-        <h1 className="text-4xl font-bold mb-2">🎯 RaceRadar</h1>
-        <p className="text-blue-100 text-lg">
-          Discover running races, triathlons and trail events
-        </p>
-      </div>
+
+        <Header />
 
       {/* FILTRI */}
       <div className="max-w-4xl mx-auto px-4 py-6 flex flex-col gap-4">

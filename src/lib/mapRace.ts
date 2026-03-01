@@ -26,8 +26,8 @@ export function mapRace(r: RaceRow): Race {
     city: r.city,
     region: r.region,
     country: r.country,
-    elevation_m: r.elevation_m ?? 0,
-    price_eur: r.price_eur ?? 0,
+    elevation_m: r.elevation_m ?? undefined,
+    price_eur: r.price_eur ?? undefined,
     price_note: r.price_note ?? undefined,
     website: r.website ?? undefined,
     description: r.description ?? undefined,
@@ -40,7 +40,7 @@ export function mapRace(r: RaceRow): Race {
     contactPhone: r.contact_phone ?? undefined,
     instagram: r.instagram ?? undefined,
     privateEmail: r.private_email ?? undefined,
+    privatePhone: r.private_phone ?? undefined,
     flyerUrl: r.flyer_url ?? undefined,
-    hyrox_categories: r.hyrox_categories ?? undefined,
   }
 }

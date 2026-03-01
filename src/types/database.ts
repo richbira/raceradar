@@ -18,7 +18,7 @@ export type Database = {
         Row: {
           associations: string[] | null
           city: string
-          competition: string | null
+          competition: string[] | null
           contact_email: string | null
           contact_phone: string | null
           country: string
@@ -28,14 +28,15 @@ export type Database = {
           elevation_m: number | null
           end_date: string | null
           flyer_url: string | null
-          hyrox_categories: string[] | null
           id: string
           instagram: string | null
           name: string
-          notes: string | null
+          notes: string | null //da togliere
           organizer: string | null
           price_eur: number | null
           price_note: string | null
+          private_email: string | null
+          private_phone: string | null
           region: string
           start_times: string[] | null
           status: string | null
@@ -47,7 +48,7 @@ export type Database = {
         Insert: {
           associations?: string[] | null
           city: string
-          competition?: string | null
+          competition?: string[] | null
           contact_email?: string | null
           contact_phone?: string | null
           country?: string
@@ -57,7 +58,6 @@ export type Database = {
           elevation_m?: number | null
           end_date?: string | null
           flyer_url?: string | null
-          hyrox_categories?: string[] | null
           id?: string
           instagram?: string | null
           name: string
@@ -65,6 +65,8 @@ export type Database = {
           organizer?: string | null
           price_eur?: number | null
           price_note?: string | null
+          private_email?: string | null
+          private_phone?: string | null
           region: string
           start_times?: string[] | null
           status?: string | null
@@ -76,7 +78,7 @@ export type Database = {
         Update: {
           associations?: string[] | null
           city?: string
-          competition?: string | null
+          competition?: string[] | null
           contact_email?: string | null
           contact_phone?: string | null
           country?: string
@@ -86,7 +88,6 @@ export type Database = {
           elevation_m?: number | null
           end_date?: string | null
           flyer_url?: string | null
-          hyrox_categories?: string[] | null
           id?: string
           instagram?: string | null
           name?: string
@@ -94,6 +95,8 @@ export type Database = {
           organizer?: string | null
           price_eur?: number | null
           price_note?: string | null
+          private_email?: string | null
+          private_phone?: string | null
           region?: string
           start_times?: string[] | null
           status?: string | null
@@ -171,7 +174,7 @@ export type Database = {
         Row: {
           associations: string[] | null
           city: string
-          competition: string | null
+          competition: string[] | null
           contact_email: string | null
           contact_phone: string | null
           country: string
@@ -182,7 +185,6 @@ export type Database = {
           elevation_m: number | null
           end_date: string | null
           flyer_url: string | null
-          hyrox_categories: string[] | null
           id: string
           instagram: string | null
           name: string
@@ -190,6 +192,7 @@ export type Database = {
           price_eur: number | null
           price_note: string | null
           private_email: string | null
+          private_phone: string | null
           region: string
           start_times: string[] | null
           status: string | null
@@ -200,7 +203,7 @@ export type Database = {
         Insert: {
           associations?: string[] | null
           city: string
-          competition?: string | null
+          competition?: string[] | null
           contact_email?: string | null
           contact_phone?: string | null
           country?: string
@@ -211,7 +214,6 @@ export type Database = {
           elevation_m?: number | null
           end_date?: string | null
           flyer_url?: string | null
-          hyrox_categories?: string[] | null
           id?: string
           instagram?: string | null
           name: string
@@ -219,6 +221,7 @@ export type Database = {
           price_eur?: number | null
           price_note?: string | null
           private_email?: string | null
+          private_phone?: string | null
           region: string
           start_times?: string[] | null
           status?: string | null
@@ -229,7 +232,7 @@ export type Database = {
         Update: {
           associations?: string[] | null
           city?: string
-          competition?: string | null
+          competition?: string[] | null
           contact_email?: string | null
           contact_phone?: string | null
           country?: string
@@ -240,7 +243,6 @@ export type Database = {
           elevation_m?: number | null
           end_date?: string | null
           flyer_url?: string | null
-          hyrox_categories?: string[] | null
           id?: string
           instagram?: string | null
           name?: string
@@ -248,6 +250,7 @@ export type Database = {
           price_eur?: number | null
           price_note?: string | null
           private_email?: string | null
+          private_phone?: string | null
           region?: string
           start_times?: string[] | null
           status?: string | null

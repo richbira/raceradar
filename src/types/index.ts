@@ -37,14 +37,12 @@ export type Race = {
   region: string
   country: string
   venue?: string  // es. "Allianz Cloud Milano"
-  elevation_m: number
-  price_eur: number
+  elevation_m?: number
+  price_eur?: number
   price_note?: string    // nota testuale sui prezzi
   website?: string
   description?: string
-  hyrox_categories?: string[]
-  // campi opzionali che hai già aggiunto
-  competition?: string
+  competition?: string[]  
   associations?: string[]
   startTimes?: string[]
   organizer?: string
@@ -52,6 +50,7 @@ export type Race = {
   contactPhone?: string
   instagram?: string
   privateEmail?: string
+  privatePhone?: string  
   flyerUrl?: string
 }
 
@@ -75,6 +74,8 @@ export const DISTANCE_INFO: Record<RaceDistance, {
   'Hyrox-Doubles': { label: 'Hyrox Doubles', description: '8x1km run + 8 stations', run: '8 km' },
   'Hyrox-Relay':   { label: 'Hyrox Relay',   description: 'each runs 2km + 2 stations', run: '8 km' },
 }
+
+
 
 // RUN CLUBS
 export type RunClub = {

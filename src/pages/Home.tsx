@@ -20,15 +20,12 @@ const DISTANCES_BY_TYPE: Record<RaceType | "all", (RaceDistance | "all")[]> = {
     "Olympic",
     "Half-Ironman",
     "Ironman",
-    "Hyrox-Single",
-    "Hyrox-Doubles",
-    "Hyrox-Relay",
   ],
   Running: ["all", "5k", "10k", "Half-Marathon", "Marathon", "Ultra"],
   Triathlon: ["all", "Sprint", "Olympic", "Half-Ironman", "Ironman"],
   Trail: ["all", "Ultra"],
   Cycling: ["all"],
-  Hyrox: ["all", "Hyrox-Single", "Hyrox-Doubles", "Hyrox-Relay"],
+  Hyrox: [], // ["all", "Hyrox-Single", "Hyrox-Doubles", "Hyrox-Relay"] <- non ha senso filtrare per distanza le gare Hyrox, perché la distanza è sempre la stessa (8km), cambia solo il formato (Single, Doubles, Relay)
 };
 const ALL_TYPES: (RaceType | "all")[] = ["all", ...RACE_TYPES];
 const PAGE_SIZE = 10;
@@ -213,8 +210,8 @@ if (loading) return (
           </div>
         </div>
 
-        {/* Filtro distanza — appare solo se tipo selezionato */}
-        {selectedType !== "all" && (
+        {/* Filtro distanza — appare solo se tipo selezionato e nascondo per hyrox*/}
+        {selectedType !== "all" && selectedType !== "Hyrox" && (
           <div className="flex gap-2 flex-wrap">
             {availableDistances.map((dist) => (
               <button

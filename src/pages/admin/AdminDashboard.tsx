@@ -9,14 +9,26 @@ type PendingRace = {
   type: string
   distances: string[]
   date: string
+  end_date: string | null
   city: string
   region: string
-  website: string | null
+  country: string
+  venue: string | null
+  elevation_m: number | null
+  competition: string[] | null
+  associations: string[] | null
+  start_times: string[] | null
   price_eur: number | null
+  price_note: string | null
+  website: string | null
   description: string | null
   organizer: string | null
   contact_email: string | null
+  contact_phone: string | null
   instagram: string | null
+  private_email: string | null
+  private_phone: string | null
+  flyer_url: string | null
   submitted_at: string
 }
 
@@ -59,28 +71,47 @@ export default function AdminDashboard() {
     setLoading(false)
   }
 
- useEffect(() => {
-  if (authLoading) return
-  if (!user) { navigate('/admin/login'); return }
-
-  Promise.all([
-    supabase.from('pending_races').select('*').eq('status', 'pending').order('submitted_at', { ascending: true }),
-    supabase.from('pending_run_clubs').select('*').eq('status', 'pending').order('submitted_at', { ascending: true }),
-  ]).then(([racesRes, clubsRes]) => {
-    setPending(racesRes.data ?? [])
-    setPendingClubs(clubsRes.data ?? [])
-    setLoading(false)
-  })
-}, [user, authLoading, navigate])
+  useEffect(() => {
+    if (authLoading) return
+    if (!user) { navigate('/admin/login'); return }
+    Promise.all([
+      supabase.from('pending_races').select('*').eq('status', 'pending').order('submitted_at', { ascending: true }),
+      supabase.from('pending_run_clubs').select('*').eq('status', 'pending').order('submitted_at', { ascending: true }),
+    ]).then(([racesRes, clubsRes]) => {
+      setPending(racesRes.data ?? [])
+      setPendingClubs(clubsRes.data ?? [])
+      setLoading(false)
+    })
+  }, [user, authLoading, navigate])
 
   async function handleApproveRace(race: PendingRace) {
     setActionLoading(race.id)
     await supabase.from('races').insert({
-      name: race.name, type: race.type, distances: race.distances,
-      date: race.date, city: race.city, region: race.region, country: 'Italia',
-      website: race.website, price_eur: race.price_eur, description: race.description,
-      organizer: race.organizer, contact_email: race.contact_email,
-      instagram: race.instagram, status: 'approved',
+      name: race.name,
+      type: race.type,
+      distances: race.distances,
+      date: race.date,
+      end_date: race.end_date,
+      city: race.city,
+      region: race.region,
+      country: race.country,
+      venue: race.venue,
+      elevation_m: race.elevation_m,
+      competition: race.competition,
+      associations: race.associations,
+      start_times: race.start_times,
+      price_eur: race.price_eur,
+      price_note: race.price_note,
+      website: race.website,
+      description: race.description,
+      organizer: race.organizer,
+      contact_email: race.contact_email,
+      contact_phone: race.contact_phone,
+      instagram: race.instagram,
+      private_email: race.private_email,
+      private_phone: race.private_phone,
+      flyer_url: race.flyer_url,
+      status: 'approved',
     })
     await supabase.from('pending_races').delete().eq('id', race.id)
     setActionLoading(null)
@@ -143,31 +174,15 @@ export default function AdminDashboard() {
       {/* TABS */}
       <div className="max-w-4xl mx-auto px-4 pt-6">
         <div className="flex gap-2">
-          <button
-            onClick={() => setActiveTab('races')}
-            className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-              activeTab === 'races'
-                ? 'bg-blue-600 text-white border-blue-600'
-                : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400'
-            }`}
-          >
+          <button onClick={() => setActiveTab('races')}
+            className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${activeTab === 'races' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400'}`}>
             Gare
-            <span className="ml-2 bg-orange-100 text-orange-600 text-xs px-2 py-0.5 rounded-full">
-              {pending.length}
-            </span>
+            <span className="ml-2 bg-orange-100 text-orange-600 text-xs px-2 py-0.5 rounded-full">{pending.length}</span>
           </button>
-          <button
-            onClick={() => setActiveTab('runclubs')}
-            className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
-              activeTab === 'runclubs'
-                ? 'bg-blue-600 text-white border-blue-600'
-                : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400'
-            }`}
-          >
+          <button onClick={() => setActiveTab('runclubs')}
+            className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${activeTab === 'runclubs' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400'}`}>
             Run Club
-            <span className="ml-2 bg-orange-100 text-orange-600 text-xs px-2 py-0.5 rounded-full">
-              {pendingClubs.length}
-            </span>
+            <span className="ml-2 bg-orange-100 text-orange-600 text-xs px-2 py-0.5 rounded-full">{pendingClubs.length}</span>
           </button>
         </div>
       </div>
@@ -187,27 +202,41 @@ export default function AdminDashboard() {
                   <div>
                     <span className="text-xs font-semibold uppercase tracking-wide text-blue-500">{race.type}</span>
                     <h3 className="text-lg font-bold text-gray-800">{race.name}</h3>
-                    <p className="text-sm text-gray-500">📍 {race.city}, {race.region} · 📅 {new Date(race.date).toLocaleDateString('it-IT')}</p>
+                    <p className="text-sm text-gray-500">📍 {race.city}, {race.region}, {race.country} · 📅 {new Date(race.date).toLocaleDateString('it-IT')}</p>
                   </div>
                   <span className="text-xs text-gray-400">{new Date(race.submitted_at).toLocaleDateString('it-IT')}</span>
                 </div>
+
                 <div className="flex gap-1 flex-wrap mb-3">
                   {race.distances.map((dist) => (
                     <span key={dist} className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">{dist}</span>
                   ))}
                 </div>
+
                 <div className="text-sm text-gray-600 space-y-1 mb-4">
-                  {race.price_eur && <p>💶 €{race.price_eur}</p>}
+                  {race.venue && <p>🏟️ {race.venue}</p>}
+                  {race.elevation_m != null && <p>⛰️ {race.elevation_m === 0 ? 'Pianeggiante' : `${race.elevation_m}m dislivello`}</p>}
+                  {race.competition && <p>🏆 {race.competition.join(', ')}</p>}
+                  {race.start_times && <p>🕐 {race.start_times.join(' · ')}</p>}
+                  {race.price_eur != null && <p>💶 €{race.price_eur}{race.price_note && ` — ${race.price_note}`}</p>}
                   {race.website && <p>🌐 <a href={race.website} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">{race.website}</a></p>}
                   {race.organizer && <p>🧑‍💼 {race.organizer}</p>}
                   {race.contact_email && <p>📧 {race.contact_email}</p>}
+                  {race.contact_phone && <p>📞 {race.contact_phone}</p>}
+                  {race.private_email && <p>🔒 {race.private_email}</p>}
+                  {race.private_phone && <p>🔒 {race.private_phone}</p>}
+                  {race.associations && <p>🏅 {race.associations.join(', ')}</p>}
+                  {race.flyer_url && <p>📄 <a href={race.flyer_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">Locandina</a></p>}
                   {race.description && <p className="text-gray-500 italic">"{race.description}"</p>}
                 </div>
+
                 <div className="flex gap-3">
-                  <button onClick={() => handleApproveRace(race)} disabled={actionLoading === race.id} className="flex-1 bg-green-500 hover:bg-green-600 disabled:opacity-50 text-white py-2 rounded-xl text-sm font-semibold transition-colors">
+                  <button onClick={() => handleApproveRace(race)} disabled={actionLoading === race.id}
+                    className="flex-1 bg-green-500 hover:bg-green-600 disabled:opacity-50 text-white py-2 rounded-xl text-sm font-semibold transition-colors">
                     {actionLoading === race.id ? '⏳' : '✅ Approva'}
                   </button>
-                  <button onClick={() => handleReject('pending_races', race.id)} disabled={actionLoading === race.id} className="flex-1 bg-red-100 hover:bg-red-200 disabled:opacity-50 text-red-600 py-2 rounded-xl text-sm font-semibold transition-colors">
+                  <button onClick={() => handleReject('pending_races', race.id)} disabled={actionLoading === race.id}
+                    className="flex-1 bg-red-100 hover:bg-red-200 disabled:opacity-50 text-red-600 py-2 rounded-xl text-sm font-semibold transition-colors">
                     {actionLoading === race.id ? '⏳' : '❌ Rifiuta'}
                   </button>
                 </div>
@@ -243,10 +272,12 @@ export default function AdminDashboard() {
                   {club.description && <p className="text-gray-500 italic">"{club.description}"</p>}
                 </div>
                 <div className="flex gap-3">
-                  <button onClick={() => handleApproveClub(club)} disabled={actionLoading === club.id} className="flex-1 bg-green-500 hover:bg-green-600 disabled:opacity-50 text-white py-2 rounded-xl text-sm font-semibold transition-colors">
+                  <button onClick={() => handleApproveClub(club)} disabled={actionLoading === club.id}
+                    className="flex-1 bg-green-500 hover:bg-green-600 disabled:opacity-50 text-white py-2 rounded-xl text-sm font-semibold transition-colors">
                     {actionLoading === club.id ? '⏳' : '✅ Approva'}
                   </button>
-                  <button onClick={() => handleReject('pending_run_clubs', club.id)} disabled={actionLoading === club.id} className="flex-1 bg-red-100 hover:bg-red-200 disabled:opacity-50 text-red-600 py-2 rounded-xl text-sm font-semibold transition-colors">
+                  <button onClick={() => handleReject('pending_run_clubs', club.id)} disabled={actionLoading === club.id}
+                    className="flex-1 bg-red-100 hover:bg-red-200 disabled:opacity-50 text-red-600 py-2 rounded-xl text-sm font-semibold transition-colors">
                     {actionLoading === club.id ? '⏳' : '❌ Rifiuta'}
                   </button>
                 </div>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import type { Race } from '../types'
-import { mapRace } from './mapRace'
+import { mapRace } from '../lib/mapRace'
 
+// Hook per fetchare una singola gara per ID
 export function useRace(id: string | undefined) {
   const [race, setRace] = useState<Race | null>(null)
   const [loading, setLoading] = useState(true)

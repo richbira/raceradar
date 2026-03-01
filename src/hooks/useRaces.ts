@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import type { Race } from '../types'
-import { mapRace } from './mapRace' // Importiamo il tuo mapper
+import { mapRace } from '../lib/mapRace' // Importiamo il tuo mapper
 
+
+// Hook per fetchare tutte le gare approvate
 export function useRaces() {
   const [races, setRaces] = useState<Race[]>([])
   const [loading, setLoading] = useState(true)

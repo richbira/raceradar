@@ -25,6 +25,8 @@ export default function ProposeRunClub() {
     instagram: '',
     whatsapp: '',
     strava: '',
+    strava_url: '',
+    venue: '',
     organizer: '',
     contact_email: '',
   })
@@ -64,6 +66,8 @@ export default function ProposeRunClub() {
       instagram: form.instagram || null,
       whatsapp: form.whatsapp || null,
       strava: form.strava || null,
+      strava_url: form.strava_url || null,
+      venue: form.venue || null,
       organizer: form.organizer || null,
       contact_email: form.contact_email || null,
       status: 'pending',
@@ -217,7 +221,18 @@ export default function ProposeRunClub() {
               />
             </div>
           </div>
-
+  
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-1 block">Venue</label>
+            <textarea
+              value={form.venue}
+              onChange={(e) => set('venue', e.target.value)}
+              placeholder="Luogo di ritrovo."
+              rows={1}
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+            />
+          </div>
+          
           <div>
             <label className="text-sm font-medium text-gray-700 mb-1 block">Descrizione</label>
             <textarea
@@ -248,6 +263,13 @@ export default function ProposeRunClub() {
               <label className="text-sm font-medium text-gray-700 mb-1 block">Strava</label>
               <input type="text" value={form.strava} onChange={(e) => set('strava', e.target.value)} placeholder="nome club su Strava" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
             </div>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700 mb-1 block">Link Strava</label>
+            <input type="url" value={form.strava_url} onChange={(e) => set('strava_url', e.target.value)}
+              placeholder="https://www.strava.com/clubs/..." 
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
           </div>
 
           <div className="grid grid-cols-2 gap-4">

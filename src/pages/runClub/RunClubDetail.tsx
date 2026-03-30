@@ -1,5 +1,4 @@
 import { useRunClub } from '../../hooks/useRunClub'
-import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import SkeletonCard from '../../components/SkeletonCard'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -43,6 +42,7 @@ export default function RunClubDetail() {
           <span className="text-blue-200 text-sm font-medium uppercase tracking-wide">Run Club</span>
           <h1 className="text-3xl font-bold mt-1">{runClub.name}</h1>
           <p className="text-blue-100 mt-1">📍 {runClub.city}, {runClub.region}</p>
+          {runClub.venue && (<p className="text-blue-100 mt-1">📍 {runClub.venue}</p>)}
         </div>
       </div>
 
@@ -142,6 +142,7 @@ export default function RunClubDetail() {
                 <div>
                   <p className="font-medium text-sm">Strava</p>
                   <p className="text-xs text-gray-400">{runClub.strava}</p>
+                  <p className="text-xs text-gray-400">{runClub.stravaUrl}</p>
                 </div>
               </a>
             )}

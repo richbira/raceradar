@@ -93,6 +93,8 @@ export type RunClub = {
   instagram?: string
   whatsapp?: string
   strava?: string
+  stravaUrl?: string 
+  venue?: string 
   organizer?: string
   contactEmail?: string
   status?: string

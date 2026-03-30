@@ -47,6 +47,7 @@ type PendingRunClub = {
   instagram: string | null
   whatsapp: string | null
   strava: string | null
+  strava_url: string | null
   submitted_at: string
 }
 
@@ -125,7 +126,7 @@ export default function AdminDashboard() {
       level: club.level, days: club.days, time: club.time, price_eur: club.price_eur,
       description: club.description, organizer: club.organizer,
       contact_email: club.contact_email, instagram: club.instagram,
-      whatsapp: club.whatsapp, strava: club.strava, status: 'approved',
+      whatsapp: club.whatsapp, strava: club.strava, strava_url: club.strava_url,status: 'approved',
     })
     await supabase.from('pending_run_clubs').delete().eq('id', club.id)
     setActionLoading(null)

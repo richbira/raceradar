@@ -130,15 +130,7 @@ const toggleItem = (key: 'distances' | 'start_times', item: string) => {
         .getPublicUrl(uploadData.path);
       flyer_url = urlData.publicUrl;
     }
-
-    // Valida start_times
-      const timeRegex = /^\d{2}:\d{2}$/
-      const invalidTimes = form.start_times.filter(t => !timeRegex.test(t))
-      if (invalidTimes.length > 0) {
-        setError(`Formato orario non valido: ${invalidTimes.join(', ')}. Usa HH:MM`)
-      return
-      }
-
+    
     const { error } = await supabase.from("pending_races").insert({
       name: form.name,
       type: form.type,
@@ -330,25 +322,26 @@ const toggleItem = (key: 'distances' | 'start_times', item: string) => {
           </div>
 
           {/* Orari partenza */}
+{/* Orari partenza */}
 <div>
   <label className="text-sm font-medium text-gray-700 mb-2 block">Orari partenza</label>
   
   <div className="flex gap-2 items-center mb-3">
     <input
-  ref={timeInputRef}
-  type="time"
-  className={inputClass}
-  onChange={(e) => {
-    const value = e.target.value
-    if (value && !form.start_times.includes(value)) {
-      setForm((prev) => ({ ...prev, start_times: [...prev.start_times, value] }))
-      setTimeout(() => {
-        if (timeInputRef.current) timeInputRef.current.value = ''
-      }, 0)
-    }
-  }}
-/>
-    <span className="text-xs text-gray-400 whitespace-nowrap">Seleziona e aggiunge automaticamente</span>
+      ref={timeInputRef}
+      type="time"
+      className={inputClass}
+      onBlur={(e) => {
+        const value = e.target.value
+        if (value && !form.start_times.includes(value)) {
+          setForm((prev) => ({ ...prev, start_times: [...prev.start_times, value] }))
+          setTimeout(() => {
+            if (timeInputRef.current) timeInputRef.current.value = ''
+          }, 0)
+        }
+      }}
+    />
+    <span className="text-xs text-gray-400 whitespace-nowrap">Conferma uscendo dal campo</span>
   </div>
 
   {form.start_times.length > 0 && (

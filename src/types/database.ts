@@ -31,7 +31,7 @@ export type Database = {
           id: string
           instagram: string | null
           name: string
-          notes: string | null //da togliere
+          notes: string | null
           organizer: string | null
           price_eur: number | null
           price_note: string | null
@@ -123,8 +123,10 @@ export type Database = {
           region: string
           status: string | null
           strava: string | null
+          strava_url: string | null
           submitted_at: string | null
           time: string | null
+          venue: string | null
           website: string | null
           whatsapp: string | null
         }
@@ -143,8 +145,10 @@ export type Database = {
           region: string
           status?: string | null
           strava?: string | null
+          strava_url?: string | null
           submitted_at?: string | null
           time?: string | null
+          venue?: string | null
           website?: string | null
           whatsapp?: string | null
         }
@@ -163,8 +167,10 @@ export type Database = {
           region?: string
           status?: string | null
           strava?: string | null
+          strava_url?: string | null
           submitted_at?: string | null
           time?: string | null
+          venue?: string | null
           website?: string | null
           whatsapp?: string | null
         }
@@ -277,7 +283,9 @@ export type Database = {
           region: string
           status: string | null
           strava: string | null
+          strava_url: string | null
           time: string | null
+          venue: string | null
           website: string | null
           whatsapp: string | null
         }
@@ -297,7 +305,9 @@ export type Database = {
           region: string
           status?: string | null
           strava?: string | null
+          strava_url?: string | null
           time?: string | null
+          venue?: string | null
           website?: string | null
           whatsapp?: string | null
         }
@@ -317,7 +327,9 @@ export type Database = {
           region?: string
           status?: string | null
           strava?: string | null
+          strava_url?: string | null
           time?: string | null
+          venue?: string | null
           website?: string | null
           whatsapp?: string | null
         }

@@ -21,5 +21,7 @@ export function mapRunClub(r: RunClubRow): RunClub {
     strava: r.strava ?? undefined,
     organizer: r.organizer ?? undefined,
     contactEmail: r.contact_email ?? undefined,
+    stravaUrl: r.strava_url ?? undefined,
+    venue: r.venue ?? undefined,
   }
 }
